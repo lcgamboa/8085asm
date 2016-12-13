@@ -1,0 +1,5 @@
+Installation:
+
+make         - Compile the 8085asm and 8085dasm
+
+you can copy the files 8085asm and 8085dasm to /usr/local/bin

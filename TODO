@@ -1,0 +1,6 @@
+ASSEMBLER don't detect code erros (possible crashs)
+
+	CALL undefinedlabel don't show error!
+
+
+DISASM don't detect differences between code an data
