@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2009  Luis Claudio Gambôa Lopes
+   Copyright (c) : 2016  Luis Claudio Gamboa Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -74,7 +74,10 @@ int i;
      };
   }
 
-  sscanf(arg,"%X",&i);  
+  if(arg[0] == '#')
+    sscanf(arg+1,"%i",&i);  
+  else	  
+    sscanf(arg,"%X",&i);  
   return i;
 };
 
@@ -229,7 +232,7 @@ int err;
        if(strcmp("EQU",men) == 0)return 0;
     }
 
-    if(strcmp("DB",men)==0)
+    if((strcmp("DB",men)==0) || (strcmp(".DB",men)==0))
     {  
       addi=0;
       prg[addi]=parsearg(arg1,line);
@@ -261,7 +264,16 @@ int err;
     }
     
     if(strcmp("END",men)==0)return 0;
-  
+    
+    //only for compatiblity, without real function
+    if(strcmp(".MODULE",men)==0)return 0;
+    if(strcmp(".LIST",men)==0)return 0;
+    if(strcmp(".NLIST",men)==0)return 0;
+    if(strcmp(".AREA",men)==0)return 0;
+    if(strcmp(".GLOBL",men)==0)return 0;
+
+
+  //unknown 
   if(strcmp(opcode[i-1].men,"ENDO") == 0)
   {
           printf("line %i error!!!!\n%s   (Unknown Instruction)\n",lc,line);
@@ -307,11 +319,12 @@ FILE *fout2;
      return -1;
   }
   
-  fnamep=strtok(fname,".");
 
-  printf("LCGamboa 8085 assembler 2008\n\n");
+  printf("LCGamboa 8085 assembler 2008-2016\n\n");
 
-  strcpy(fname2,fnamep);
+  strcpy(fname2,fname);
+  fnamep=strrchr(fname2,'.');
+  fnamep[0]=0;
   strcat(fname2,".map");
   fout=fopen(fname2,"w");
   
@@ -321,7 +334,7 @@ FILE *fout2;
      return -1;
   }
 
-  fprintf(fout,"LCGamboa 8085 assembler 2008\n\n");
+  fprintf(fout,"LCGamboa 8085 assembler 2008-2016\n\n");
   pass=1;
   while(fgets(line,256,fin))
   {
@@ -405,7 +418,9 @@ FILE *fout2;
   printf("MEM  (%i bytes):\n\n",memc);
 
 
-  strcpy(fname2,fnamep);
+  strcpy(fname2,fname);
+  fnamep=strrchr(fname2,'.');
+  fnamep[0]=0;
   strcat(fname2,".hex");
   fout2=fopen(fname2,"w");
   
