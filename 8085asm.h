@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2009  Luis Claudio Gambôa Lopes
+   Copyright (c) : 2009-2017  Luis Claudio Gambôa Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -48,6 +48,9 @@ typedef struct
   char arg1[4];
   char arg2[4];
   int  uargs;		/* 0 - no arg, 1 - byte, 2 - word */
+  char mz80[10];
+  char a1z80[10];
+  char a2z80[10];
 } Opcode;
 
 
