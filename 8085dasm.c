@@ -94,7 +94,10 @@ unsigned short paddr;
         
 	for(k=opcode[j].uargs; k >0 ; k--)
 	{
-	  printf("%02X",mem[i+k].value); 
+	  if(k==1)	
+	    printf("%02Xh",mem[i+k].value); 
+	  else
+	    printf("%02X",mem[i+k].value); 
 	}
 	
 	printf("\n");
