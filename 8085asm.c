@@ -4,7 +4,7 @@
 
    ########################################################################
 
-   Copyright (c) : 2016  Luis Claudio Gamboa Lopes
+   Copyright (c) : 2008-2018  Luis Claudio Gamboa Lopes
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -58,27 +58,44 @@ int memc;
 int 
 parsearg(char* arg, char * line)
 {
-int i;
+  int i;
+  int ret=-1;
 
   if(arg == NULL)
   {
     printf("line %i error!!!!\n%s\n",lc+1,line);
     exit(-1);
   };
-
-  for(i=0;i<labelsc;i++)
-  {
-     if(strcmp(labels[i].nome,arg)==0)
-     {
-       return labels[i].value;
-     };
-  }
+  
 
   if(arg[0] == '#')
-    sscanf(arg+1,"%i",&i);  
-  else	  
-    sscanf(arg,"%X",&i);  
-  return i;
+  {
+     sscanf(arg+1,"%i",&ret);
+  }  
+  else if(isdigit(arg[0]))
+  {
+     sscanf(arg,"%X",&ret);  
+  }
+  else
+  {
+    for(i=0;i<labelsc;i++)
+    { 
+       if(strcmp(labels[i].nome,arg)==0)
+       {
+         ret= labels[i].value;
+       }
+    }
+  }
+  
+  //printf("%s = %i\n",arg,ret);
+
+  if(ret < 0)
+  {
+    printf("Undefined Argument (%s) in line %i: %s\n",arg,lc+1,line);
+    exit(-1);
+  }
+  
+  return ret;
 };
 
 
@@ -334,7 +351,7 @@ FILE *fout2;
      return -1;
   }
 
-  fprintf(fout,"LCGamboa 8085 assembler 2008-2016\n\n");
+  fprintf(fout,"LCGamboa 8085 assembler 2008-2018\n\n");
   pass=1;
   while(fgets(line,256,fin))
   {
