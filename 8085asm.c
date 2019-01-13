@@ -36,6 +36,9 @@
 
 int lc=1;
 
+char fname[256];
+
+	
 void
 ucase (char * str)
 {
@@ -63,7 +66,7 @@ parsearg(char* arg, char * line)
 
   if(arg == NULL)
   {
-    printf("line %i error!!!!\n%s\n",lc+1,line);
+    printf("%s:%i: error:\n%s\n",fname,lc+1,line);
     exit(-1);
   };
   
@@ -176,7 +179,7 @@ int err;
 	{
 	  if(arg1 == NULL)
 	  {
-            printf("line %i error!!!!\n%s\n",lc,line);
+            printf("%s:%i: error:\n%s\n",fname,lc,line);
             exit(-1);
 	  }  
           if(strcmp(opcode[i].arg1,arg1)==0)
@@ -218,7 +221,7 @@ int err;
       {
         if(err)
 	{
-          printf("line %i error!!!!\n%s\n",lc,line);
+          printf("%s:%i: error:\n%s\n",fname,lc,line);
           exit(-1);
 	}
       }
@@ -288,12 +291,13 @@ int err;
     if(strcmp(".NLIST",men)==0)return 0;
     if(strcmp(".AREA",men)==0)return 0;
     if(strcmp(".GLOBL",men)==0)return 0;
+    if(strcmp("ISET",men)==0)return 0;
 
 
   //unknown 
   if(strcmp(opcode[i-1].men,"ENDO") == 0)
   {
-          printf("line %i error!!!!\n%s   (Unknown Instruction)\n",lc,line);
+          printf("%s:%i: error:\n%s   (Unknown Instruction)\n",fname,lc,line);
           exit(-1);
   }
  
@@ -303,7 +307,6 @@ int err;
 int
 main(int argc,char** argv)
 {
-char fname[256];
 char fname2[256];
 FILE* fin;
 char line[256];
