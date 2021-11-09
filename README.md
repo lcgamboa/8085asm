@@ -1,5 +1,5 @@
 
-# 8085asm - Simple 8085 assembler and disassembler
+# 8085asm - Simple 8085/8080 assembler and disassembler
 
 Simple 8085 assembler and disassembler for didatic use.
 The 8085asm generate the map file and intel hex file. 
